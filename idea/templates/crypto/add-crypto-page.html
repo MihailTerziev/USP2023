@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+{% block content %}
+    <!-- In case of error, you should display div with class "errorContainer" -->
+    <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
+
+    <!-- <div>
+            <div class="errorContainer">
+                <p>Error</p>
+            </div>
+        </div> -->
+    <section id="create-container">
+        <div class="create-container-info">
+            <h1>Create Announcement</h1>
+            <h4>Post your coins to sell</h4>
+            <form action="{% url "add-crypto-page" %}" method="post" enctype="multipart/form-data">
+                {{ form }}
+                <input type="submit" id="btn" value="Create">
+                {% csrf_token %}
+            </form>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+{% block content %}
+    <!-- In case of error, you should display div with class "errorContainer" -->
+    <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
+
+    <!-- <div>
+            <div class="errorContainer">
+                <p>Error</p>
+            </div>
+         </div> -->
+    <section id="create-container">
+        <div class="create-container-info">
+            <h1>Add Staff Employee</h1>
+            <h4>Enter information</h4>
+            <form action="{% url 'create-staff-page' %}" method="post" enctype="multipart/form-data">
+                {{ form }}
+                <input type="submit" value="Add">
+                {% csrf_token %}
+            </form>
+        </div>
+    </section>
+{% endblock %}
