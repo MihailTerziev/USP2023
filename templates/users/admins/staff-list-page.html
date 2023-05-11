@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+    <form style="margin-left: 400px" class="search-form" action="#" method="">
+        <input type="text" class="search-coin" name="" placeholder="Search here...">
+        <button type="submit" class="btn-search">Search</button>
+    </form>
+    <div class="search-result">
+        <div class="search-list">
+            <div class="coin">
+                <div class="coin-img">
+                    <img src="{% static 'images/ethereum.png' %}" alt="coin image">
+                </div>
+                <div class="coin-info">
+                    <h1>Ethereum</h1>
+                    <p><span>Price: </span>$2,338.55</p>
+                    <p><span>Payment: </span>debit-card</p>
+                </div>
+
+                <a href="{% url 'details-crypto-page' crypto_slug='ethereum' %}" class="btn-details">Details</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

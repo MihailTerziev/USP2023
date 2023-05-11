@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+    <section class="crypto-market">
+        <form style="margin-left: 400px" class="search-form" action="#" method="">
+            <input type="text" class="search-coin" name="" placeholder="Search here...">
+            <button type="submit" class="btn-search">Search</button>
+        </form>
+        {% if crypto %}
+        <div style="height: 540px; margin-top: 50px" class="offer-list">
+            {% for currency in crypto %}
+                <div class="coin">
+                    <div class="coin-img">
+                        <img src="/media/{{ currency.photo }}" alt="{{ currency.name }} image">
+                    </div>
+                    <div class="coin-info">
+                        <h1>{{ currency.name }}</h1>
+                        <p><span>Price: </span>${{ currency.price|floatformat:2 }}</p>
+{#                          <p><span>Payment: </span>debit-card</p>#}
+                    </div>
+
+                    <a href="{% url 'details-crypto-page' crypto_slug=currency.slug %}" class="btn-details">Details</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="margin-top: 100px" class="no-offer">
+            <p>There are no crypto offers found!</p>
+        </div>
+        {% endif %}
+    </section>
+{% endblock %}

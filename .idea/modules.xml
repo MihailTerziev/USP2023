@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/CryptoTradingApp.iml" filepath="$PROJECT_DIR$/.idea/CryptoTradingApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../PythonProjects/SoftUni/OOP/.idea/OOP.iml" filepath="$PROJECT_DIR$/../../../PythonProjects/SoftUni/OOP/.idea/OOP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../PythonProjects/SnakeAI/.idea/SnakeAI.iml" filepath="$PROJECT_DIR$/../../../PythonProjects/SnakeAI/.idea/SnakeAI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../PythonProjects/SpaceInvaders/.idea/SpaceInvaders.iml" filepath="$PROJECT_DIR$/../../../PythonProjects/SpaceInvaders/.idea/SpaceInvaders.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../tu-varna/Семестър_VI/СЕФП/.idea/СЕФП.iml" filepath="$PROJECT_DIR$/../../../tu-varna/Семестър_VI/СЕФП/.idea/СЕФП.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+    <section class="crypto-market">
+        <h1><span>Your</span> Wallet</h1>
+        <h2>Balance: {{ current_balance|floatformat:2 }} $</h2>
+        {% if crypto %}
+        <div style="height: 540px; margin-top: 50px" class="offer-list">
+            {% for currency, owned_coins in crypto %}
+                <div class="coin">
+                    <div class="coin-img">
+                        <img src="/media/{{ currency.photo }}" alt="{{ currency.name }} image">
+                    </div>
+                    <div class="coin-info">
+                        <h1>{{ currency.name }}</h1>
+                        <p><span>Price: </span>${{ currency.price|floatformat:2 }}</p>
+                        <p><span>Owned: </span>{{ owned_coins|floatformat:6 }}</p>
+                    </div>
+
+                    <a href="{% url 'details-crypto-page' crypto_slug=currency.slug %}" class="btn-details">Details</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="margin-top: 100px" class="no-offer">
+            <p>No owned crypto</p>
+        </div>
+        {% endif %}
+    </section>
+{% endblock %}

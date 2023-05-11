@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="content">
+        <h1>BUY & <br>SELL <span>Crypto</span></h1>
+        <p>A crypto is a digital currency designed to work as a medium of <br>exchange through a computer network
+            that is not reliant on any central authority.</p>
+        <a href="{% url 'trade-page' %}" class="trade">TRADE</a>
+    </div>
+
+{#    <div class="coin-list">#}
+{#        {% for currency in crypto %}#}
+{#            <div class="coin">#}
+{#            <img src="{% static 'images/bitcoin.png' %}" alt="{{ currency.name }} image">#}
+{#            <div>#}
+{#                <h3>{{ currency.price|floatformat:2 }}</h3>#}
+{#                <p>{{ currency.name }}</p>#}
+{#            </div>#}
+{#        </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{% endblock %}

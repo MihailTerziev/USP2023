@@ -1,0 +1,33 @@
+{% load static %}
+<nav>
+    <a href="{% url 'index-page' %}">
+        <img src="{% static 'images/logo.png' %}" class="logo" alt="logo image">
+    </a>
+    <ul>
+        <li><a href="{% url 'catalogue-page' %}">Catalogue</a></li>
+
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'details-user-page' pk=request.user.pk %}">Profile</a></li>
+            <li><a href="{% url 'increase-balance-page' %}">Add Balance</a></li>
+
+            {% if request.user.is_superuser %}
+                <li><a href="{% url 'add-crypto-page' %}">Create Offer</a></li>
+                <li><a href="{% url 'create-admin-page' %}">Add Admin</a></li>
+{#                <li><a href="{% url 'users-list-page' %}">Users</a></li>#}
+{#                <li><a href="{% url 'staff-list-page' %}">Staff</a></li>#}
+            {% elif request.user.is_staff %}
+                <li><a href="{% url 'users-list-page' %}">Users</a></li>
+            {% endif %}
+
+            <li><a href="{% url 'purchase-page' %}">Buy Crypto</a></li>
+            <li><a href="{% url 'sale-page' %}">Sell Crypto</a></li>
+            <li><a href="{% url 'trade-page' %}">Trade</a></li>
+            <li><a href="{% url 'wallet-page' %}">Wallet</a></li>
+            <li><a href="{% url 'logout-page' %}">Logout</a></li>
+            <li style="float:right">Hello, <b><strong>{{ request.user }}</strong></b>!</li>
+        {% else %}
+            <li><a href="{% url 'login-user-page' %}">Login</a></li>
+            <li><a href="{% url 'register-user-page' %}">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+{% block content %}
+    <h1 align="center"><span>Crypto</span> Sale</h1>
+    <section style="margin-top: 50px" id="edit-container">
+        <div style="margin-top: 50px" class="edit-container-info">
+            <form style="width: 510px" action="{% url 'sale-page' %}" method="post">
+                {{ form }}
+                <input type="submit" id="buy-btn" value="Sell">
+                {% csrf_token %}
+            </form>
+        </div>
+    </section>
+{% endblock %}
