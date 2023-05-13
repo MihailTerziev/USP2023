@@ -13,10 +13,7 @@
             {% if request.user.is_superuser %}
                 <li><a href="{% url 'add-crypto-page' %}">Create Offer</a></li>
                 <li><a href="{% url 'create-admin-page' %}">Add Admin</a></li>
-{#                <li><a href="{% url 'users-list-page' %}">Users</a></li>#}
-{#                <li><a href="{% url 'staff-list-page' %}">Staff</a></li>#}
-            {% elif request.user.is_staff %}
-                <li><a href="{% url 'users-list-page' %}">Users</a></li>
+                <li><a href="{% url 'create-staff-page' %}">Add Staff</a></li>
             {% endif %}
 
             <li><a href="{% url 'purchase-page' %}">Buy Crypto</a></li>
@@ -31,3 +28,5 @@
         {% endif %}
     </ul>
 </nav>
+{#<li><a href="{% url 'users-list-page' %}">Users</a></li>#}
+{#<li><a href="{% url 'staff-list-page' %}">Staff</a></li>#}

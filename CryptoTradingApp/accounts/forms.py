@@ -1,9 +1,15 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 from CryptoTradingApp.crypto.models import CryptoWallet
+from CryptoTradingApp.common.models import PaymentMethod
 
 
 UserModel = get_user_model()
+
+
+class IncreaseBalanceForm(forms.Form):
+    amount = forms.CharField(widget=forms.NumberInput)
+    transaction_method = forms.ChoiceField(choices=PaymentMethod.choices())
 
 
 class UserCreateForm(auth_forms.UserCreationForm):
@@ -39,4 +45,6 @@ class SuperuserCreateForm(auth_forms.UserCreationForm):
             "username": auth_forms.UsernameField
         }
 
-# TODO Implement more forms
+
+class StaffCreateForm(SuperuserCreateForm):
+    pass

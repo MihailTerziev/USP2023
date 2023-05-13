@@ -3,7 +3,6 @@ from CryptoTradingApp.crypto.models import CryptoCurrency
 from CryptoTradingApp.crypto.forms import *
 
 
-# TODO opravi convert_rate i izmisli kak shte stava obmena na valuti v drugi
 def add_crypto_page(request):
     if request.method == "GET":
         form = CryptoCreateForm()
@@ -33,7 +32,7 @@ def edit_crypto_page(request, crypto_slug):
 
         if form.is_valid():
             form.save()
-            return redirect("details-crypto-page", cryptoname=cryptoname)
+            return redirect("details-crypto-page", crypto_slug=crypto_slug)
 
     context = {
         "form": form,
@@ -53,7 +52,7 @@ def delete_crypto_page(request, crypto_slug):
 
         if form.is_valid():
             form.save()
-            return redirect("index-page")
+            return redirect("catalogue-page")
 
     context = {
         "form": form,

@@ -12,7 +12,7 @@
         <div class="create-container-info">
             <h1>Create Admin</h1>
             <h4>Enter information</h4>
-            <form action="{% url 'create-admin-page' %}" method="post">
+            <form action="{% url 'create-admin-page' %}" method="post" enctype="multipart/form-data">
                 {{ form }}
                 <input type="submit" value="Create">
                 {% csrf_token %}

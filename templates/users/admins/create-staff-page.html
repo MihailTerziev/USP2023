@@ -12,7 +12,7 @@
         <div class="create-container-info">
             <h1>Add Staff Employee</h1>
             <h4>Enter information</h4>
-            <form action="{% url 'create-staff-page' %}" method="post">
+            <form action="{% url 'create-staff-page' %}" method="post" enctype="multipart/form-data">
                 {{ form }}
                 <input type="submit" value="Add">
                 {% csrf_token %}

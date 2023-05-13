@@ -4,9 +4,8 @@ from CryptoTradingApp.crypto.models import *
 from CryptoTradingApp.core.utils import get_user_crypto_objects_list, check_if_crypto_in_user_wallet
 
 
-class IncreaseBalanceForm(forms.Form):
-    amount = forms.CharField(widget=forms.NumberInput)
-    transaction_method = forms.ChoiceField(choices=PaymentMethod.choices())
+class SearchCryptoForm(forms.Form):
+    search_crypto_currencies_by_name = forms.CharField(max_length=50, required=False)
 
 
 class PurchaseCreateForm(forms.ModelForm):
@@ -33,29 +32,29 @@ class PurchaseCreateForm(forms.ModelForm):
         crypto = CryptoCurrency.objects.filter(name__exact=purchase.currency).get()
         wallet = CryptoWallet.objects.filter(pk=user.pk).get()
 
-        # TODO if payment method is not crypto wallet don't change balance
-        if wallet.balance >= crypto.price:
-            wallet.balance -= crypto.price * purchase.quantity
+        if purchase.payment_method == "wallet_balance":
+            if wallet.balance >= crypto.price:
+                wallet.balance -= crypto.price * purchase.quantity
+            else:
+                # TODO raise error
+                return
 
-            is_added = False
+        is_added = False
 
-            for crypto_currency in wallet.crypto_inventory.all():
-                if crypto_currency.name == crypto.name:
-                    is_added = True
-                    break
+        for crypto_currency in wallet.crypto_inventory.all():
+            if crypto_currency.name == crypto.name:
+                is_added = True
+                break
 
-            if not is_added:
-                wallet.crypto_inventory.add(crypto)
+        if not is_added:
+            wallet.crypto_inventory.add(crypto)
 
-            crypto.quantity -= purchase.quantity
-            purchase.buyer = user
+        crypto.quantity -= purchase.quantity
+        purchase.buyer = user
 
-            crypto.save()
-            wallet.save()
-            purchase.save()
-        else:
-            # TODO raise error
-            return
+        crypto.save()
+        wallet.save()
+        purchase.save()
 
 
 class SaleCreateForm(forms.ModelForm):

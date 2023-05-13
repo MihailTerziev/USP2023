@@ -1,12 +1,6 @@
 from django.urls import path, include
 from CryptoTradingApp.crypto.views import *
 
-'''
-Crypto Add Page: http://127.0.0.1:8000/crypto/add/
-Crypto Details Page: http://127.0.0.1:8000/crypto/<slug:crypto_slug>/details/
-Crypto Edit Page: http://127.0.0.1:8000/crypto/<slug:crypto_slug>/edit/
-Crypto Delete Page: http://127.0.0.1:8000/crypto/<slug:crypto_slug>/delete/
-'''
 
 urlpatterns = (
     path("add/", add_crypto_page, name="add-crypto-page"),

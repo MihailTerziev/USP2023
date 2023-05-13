@@ -2,12 +2,13 @@
 {% load static %}
 {% block content %}
     <section class="crypto-market">
-        <form style="margin-left: 400px" class="search-form" action="#" method="">
-            <input type="text" class="search-coin" name="" placeholder="Search here...">
+        <form style="margin-left: 400px" class="search-form" action="{% url 'catalogue-page' %}" method="get">
+            {{ search_form }}
             <button type="submit" class="btn-search">Search</button>
+            {% csrf_token %}
         </form>
         {% if crypto %}
-        <div style="height: 540px; margin-top: 50px" class="offer-list">
+        <div style="height: 520px; margin-top: 50px" class="offer-list">
             {% for currency in crypto %}
                 <div class="coin">
                     <div class="coin-img">
@@ -16,7 +17,6 @@
                     <div class="coin-info">
                         <h1>{{ currency.name }}</h1>
                         <p><span>Price: </span>${{ currency.price|floatformat:2 }}</p>
-{#                          <p><span>Payment: </span>debit-card</p>#}
                     </div>
 
                     <a href="{% url 'details-crypto-page' crypto_slug=currency.slug %}" class="btn-details">Details</a>

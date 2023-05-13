@@ -1,6 +1,6 @@
 from django import forms
 from CryptoTradingApp.crypto.models import CryptoCurrency
-from CryptoTradingApp.core.mixins import DisabledFormMixin, HiddenFieldsMixin
+from CryptoTradingApp.core.mixins import ReadOnlyFieldsMixin, HiddenFieldsMixin
 
 
 class CryptoBaseForm(forms.ModelForm):
@@ -19,7 +19,6 @@ class CryptoBaseForm(forms.ModelForm):
                     "placeholder": "Crypto Name"
                 }
             ),
-            # "photo": forms.
             "price": forms.TextInput(
                 attrs={
                     "placeholder": "Price $$$"
@@ -42,12 +41,12 @@ class CryptoCreateForm(CryptoBaseForm):
     pass
 
 
-class CryptoEditForm(DisabledFormMixin, CryptoBaseForm):
-    disabled_fields = ("name",)
+class CryptoEditForm(ReadOnlyFieldsMixin, CryptoBaseForm):
+    readonly_fields = ("name",)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._disable_fields()
+        self._set_readonly_fields()
 
 
 class CryptoDeleteForm(HiddenFieldsMixin, CryptoBaseForm):

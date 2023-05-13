@@ -2,11 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.views import generic as views
 from django.urls import reverse_lazy
-from django.db.models.signals import post_save
-from django.contrib.auth.decorators import login_required
 from CryptoTradingApp.accounts.forms import *
 from CryptoTradingApp.crypto.models import *
-from CryptoTradingApp.common.forms import *
+from CryptoTradingApp.common.models import *
 from CryptoTradingApp.core.utils import get_user_crypto_objects_list
 
 
@@ -32,6 +30,11 @@ class UserDeleteView(views.DeleteView):
     model = UserModel
     success_url = reverse_lazy("index-page")
 
+    def form_valid(self, form):
+        wallet = CryptoWallet.objects.filter(owner__exact=self.object).get()
+        wallet.delete()
+        return super().form_valid(form)
+
 
 class UserDetailsView(views.DetailView):
     template_name = "users/details-user-profile-page.html"
@@ -48,75 +51,23 @@ class UserDetailsView(views.DetailView):
         return context
 
 
-@login_required(login_url='/login/')
-def trade_page(request):
-    if request.method == 'GET':
-        form = TradeCreateForm
-    else:
-        form = TradeCreateForm(request.POST)
-
-        if form.is_valid():
-            form.create_trade(request.user)
-            return redirect('wallet-page')
-
-    context = {
-        'form': form
-    }
-
-    return render(request, "users/trade-page.html", context)
-
-
-def purchase_page(request):  # TODO Implement error display
-    if request.method == 'GET':
-        form = PurchaseCreateForm()
-    else:
-        form = PurchaseCreateForm(request.POST)
-
-        if form.is_valid():
-            form.create_purchase(request.user)
-            return redirect('wallet-page')
-
-    context = {
-        'form': form
-    }
-
-    return render(request, "users/purchase-page.html", context)
-
-
-def sale_page(request):
-    if request.method == 'GET':
-        form = SaleCreateForm()
-    else:
-        form = SaleCreateForm(request.POST)
-
-        if form.is_valid():
-            form.create_sale(request.user)
-            return redirect('wallet-page')
-
-    context = {
-        'form': form
-    }
-
-    return render(request, "users/sale-page.html", context)
-
-
 def increase_balance_page(request):
     wallet = CryptoWallet.objects.filter(pk=request.user.pk).get()
 
-    if request.method == 'GET':
+    if request.method == "GET":
         form = IncreaseBalanceForm()
     else:
         form = IncreaseBalanceForm(request.POST)
 
         if form.is_valid():
-            add_amount = form.cleaned_data['amount']
+            add_amount = form.cleaned_data["amount"]
 
             wallet.balance += float(add_amount)
             wallet.save()
 
             BalanceIncrease.objects.create(
                 amount=add_amount,
-                transaction_method=form.cleaned_data['transaction_method'],
+                transaction_method=form.cleaned_data["transaction_method"],
                 user=request.user,
             )
 
@@ -129,19 +80,7 @@ def increase_balance_page(request):
     return render(request, "users/increase-balance-page.html", context)
 
 
-def catalogue_page(request):
-    context = {
-        "crypto": CryptoCurrency.objects.all()
-    }
-
-    return render(request, "common/catalog-page.html", context)
-
-
-def search_page(request):  # TODO Implement search page
-    return render(request, "common/search-page.html")
-
-
-def wallet_page(request):  # TODO find a way to calculate how many crypto a user owns
+def wallet_page(request):
     user_purchases = CryptoPurchase.objects.filter(buyer_id=request.user.pk)
     user_trades = CryptoTrade.objects.filter(trader_id=request.user.pk)
     user_sales = CryptoSale.objects.all()
@@ -156,9 +95,8 @@ def wallet_page(request):  # TODO find a way to calculate how many crypto a user
     return render(request, "users/wallet-page.html", context)
 
 
-# TODO Implement staff functionality and views
 def create_admin_user_page(request):
-    if request.method == 'GET':
+    if request.method == "GET":
         form = SuperuserCreateForm()
     else:
         form = SuperuserCreateForm(request.POST)
@@ -182,9 +120,36 @@ def create_admin_user_page(request):
     return render(request, "users/admins/create-admin-page.html", context)
 
 
-def staff_list_page(request):  # TODO Implement staff list page
-    return render(request, "users/admins/staff-list-page.html")
+def create_staff_user_page(request):
+    if request.method == 'GET':
+        form = StaffCreateForm()
+    else:
+        form = StaffCreateForm(request.POST)
+
+        if form.is_valid():
+            UserModel.objects.create_user(
+                first_name=form.cleaned_data["first_name"],
+                last_name=form.cleaned_data["last_name"],
+                date_of_birth=form.cleaned_data["date_of_birth"],
+                email=form.cleaned_data["email"],
+                phone_number=form.cleaned_data["phone_number"],
+                username=form.cleaned_data["username"],
+                password=form.cleaned_data["password1"],
+                is_staff=True,
+                is_superuser=False
+            )
+            return redirect("index-page")
+
+    context = {
+        "form": form
+    }
+
+    return render(request, "users/admins/create-staff-page.html", context)
 
 
-def users_list_page(request):  # TODO Implement users list page
-    return render(request, "users/admins/users-list-page.html")
+# def staff_list_page(request):
+#     return render(request, "users/admins/staff-list-page.html")
+
+
+# def users_list_page(request):
+#     return render(request, "users/admins/users-list-page.html")

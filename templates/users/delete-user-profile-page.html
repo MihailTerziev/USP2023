@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% block content %}
     <div class="delete-profile">
-        <h1 align="center" style="padding-top: 200px">Are you sure you want to delete your profile?</h1>
+        <h1 align="center" style="padding-top: 200px">Are you sure you want to delete your profile? You will lose all your crypto!!!</h1>
         <div class="sure-buttons">
             <form method="post" action="{% url 'delete-user-page' pk=request.user.pk %}">
                 <button class="btn-buy" style="margin-top: 40px; margin-left: 570px;">Yes</button>
